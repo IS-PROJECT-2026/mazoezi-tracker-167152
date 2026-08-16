@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mazoezi — Training Log</title>
+<meta name="description" content="A training log that turns logged sessions into weekly volume, streaks, and personal bests.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="head">
+  <div>
+    <p class="eyebrow">Training log</p>
+    <h1>Mazoezi</h1>
+  </div>
+  <dl class="totals">
+    <div><dt>Sessions</dt><dd id="t-sessions">0</dd></div>
+    <div><dt>Minutes</dt><dd id="t-minutes">0</dd></div>
+    <div><dt>Kilometres</dt><dd id="t-distance">0</dd></div>
+    <div><dt>Day streak</dt><dd id="t-streak">0</dd></div>
+  </dl>
+</header>
+
+<main>
+
+  <section class="panel panel--goal">
+    <div class="panel__head">
+      <h2>This week</h2>
+      <label class="target">
+        Target
+        <input id="target" type="number" min="10" max="2000" step="10" inputmode="numeric">
+        min
+      </label>
+    </div>
+    <p class="goal__figure">
+      <span id="goal-done">0</span><span class="goal__of">/ <span id="goal-target">150</span> min</span>
+      <span id="goal-pct" class="goal__pct">0%</span>
+    </p>
+    <div class="goal__track"><span id="goal-fill" class="goal__fill"></span></div>
+    <p id="goal-note" class="goal__note"></p>
+  </section>
+
+  <section class="panel">
+    <div class="panel__head">
+      <h2>Weekly volume</h2>
+      <span class="hint">Last eight weeks &middot; dashed line is your target</span>
+    </div>
+    <div id="chart" class="chart"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel__head">
+      <h2>Last 30 days</h2>
+      <span class="hint">Darker means a harder session</span>
+    </div>
+    <div id="heat" class="heat-strip"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel__head"><h2>Personal bests</h2></div>
+    <div id="bests" class="bests"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel__head"><h2>Log a session</h2></div>
+    <form id="log-form" class="form" novalidate>
+      <label class="field">
+        <span>Date</span>
+        <input id="date" name="date" type="date" required>
+      </label>
+      <label class="field">
+        <span>Activity</span>
+        <select id="activity" name="activity"></select>
+      </label>
+      <label class="field">
+        <span>Minutes</span>
+        <input id="minutes" name="minutes" type="number" min="1" max="600"
+               inputmode="numeric" placeholder="45" required>
+      </label>
+      <label class="field" id="distance-wrap">
+        <span>Distance (km)</span>
+        <input id="distance" name="distance" type="number" min="0" max="500"
+               step="0.1" inputmode="decimal" placeholder="7.5">
+      </label>
+      <label class="field">
+        <span>Intensity</span>
+        <select id="intensity" name="intensity">
+          <option value="1">1 — easy</option>
+          <option value="2">2 — steady</option>
+          <option value="3" selected>3 — moderate</option>
+          <option value="4">4 — hard</option>
+          <option value="5">5 — all out</option>
+        </select>
+      </label>
+      <label class="field field--wide">
+        <span>Note</span>
+        <input id="note" name="note" type="text" maxlength="90"
+               placeholder="Felt strong on the last two laps">
+      </label>
+      <button type="submit" class="submit">Add session</button>
+    </form>
+    <p id="notice" class="notice" role="status" aria-live="polite"></p>
+  </section>
+
+  <section class="panel">
+    <div class="panel__head">
+      <h2>History</h2>
+    </div>
+    <div id="filters" class="pills" role="group" aria-label="Filter by activity"></div>
+    <ul id="log" class="log"></ul>
+  </section>
+
+</main>
+
+<footer>
+  <p>Mazoezi is a coursework build. The log starts with nine weeks of sample
+     sessions so the charts have something to say — delete them and log your own.</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
