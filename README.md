@@ -1,4 +1,6 @@
-# Mazoezi — Workout Training Log
+
+# Mazoezi — Personal Training Tracker
+
 
 A static web system that turns logged workouts into something worth looking at:
 weekly volume against a target, a 30-day effort strip, a day streak, and
