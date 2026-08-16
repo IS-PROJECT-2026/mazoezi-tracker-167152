@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify entry point
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fail if index.html is missing from the repository root
+        run: test -f index.html
+
+      - name: Fail if any linked local asset is missing
+        run: |
+          grep -oE '(href|src)="[^"#:]+"' index.html \
+            | sed -E 's/.*="([^"]+)"/\1/' \
+            | while read -r asset; do
+                if [ ! -f "$asset" ]; then
+                  echo "Missing asset referenced by index.html: $asset"
+                  exit 1
+                fi
+              done
+          echo "All local assets resolved."
+
+  deploy:
+    name: Build and deploy
+    needs: verify
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
