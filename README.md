@@ -64,3 +64,13 @@ stored.
 
 The seeded history is generated from a fixed seed, so the demo looks the same
 every time it loads.
+---
+
+## Project Information
+
+- **System:** Mazoezi Training Log
+- **Admission Number:** 167152
+- **Class:** Group 4D
+- **Organisation:** IS-PROJECT-2026
+- **Repository:** mazoezi-tracker-167152
+- **Live Deployment:** https://is-project-2026.github.io/mazoezi-tracker-167152/
